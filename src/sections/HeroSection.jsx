@@ -37,7 +37,7 @@ export default function HeroSection() {
             This is where I put it all together.
           </motion.p>
           <motion.div initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{duration:1.1,delay:0.2,ease:[0.22,1,0.36,1]}}>
-            <a href="#work" className="btn-ghost">What I do</a>
+            <a href="#work" className="btn-cta">What I do</a>
           </motion.div>
         </div>
 
