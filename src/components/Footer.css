@@ -1,0 +1,94 @@
+/* ============== FOOTER (centered, side-by-side) ============== */
+.site-footer{
+  background: #fff;
+  color: var(--text);
+}
+
+/* top area */
+.footer__top{
+  padding: clamp(56px, 9vw, 112px) 0;
+}
+
+/* Center the whole block; 1 column on mobile, 2 columns on wider screens */
+.footer__grid{
+  max-width: var(--container, min(1200px, 92vw));
+  margin-inline: auto;
+
+  display: grid;
+  grid-template-columns: 1fr;          /* mobile: stack */
+  justify-items: center;               /* center each item horizontally */
+  align-items: center;                 /* vertical align */
+  justify-content: center;             /* center the whole grid */
+  gap: clamp(16px, 3vw, 32px);
+  text-align: center;                  /* center text by default */
+}
+
+@media (min-width: 720px){
+  .footer__grid{
+    grid-template-columns: auto auto;  /* side-by-side */
+    column-gap: clamp(24px, 6vw, 64px);
+  }
+}
+
+/* illustration */
+.footer__art img{
+  width: min(240px, 28vw);
+  height: auto;
+  display: block;
+}
+
+/* text block */
+.footer__title{
+  font-family: "Abril Fatface", serif;
+  font-size: clamp(28px, 4.6vw, 44px);
+  line-height: 1.15;
+  margin: 0 0 14px 0;
+}
+.paw{ font-weight: 700; }
+
+.footer__label{
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 15px;
+  opacity: .85;
+  margin: 0 0 6px 0;
+}
+
+.footer__email{
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 16px;
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.footer__email:hover{ opacity: .9; }
+
+/* credits bar (still centered) */
+.footer__bar{
+  background: #1f2b1a; /* dark strip */
+  color: #fff;
+}
+.footer__bar-inner{
+  max-width: var(--container, min(1200px, 92vw));
+  margin-inline: auto;
+  padding: 12px clamp(16px, 4vw, 28px);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  text-align: center;
+
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 13.5px;
+}
+.footer__bar-inner a{
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.footer__bar-inner a:hover{ opacity: .9; }
+
+@media (min-width: 900px){
+  .footer__bar-inner{ flex-direction: row; gap: 40px; }
+}

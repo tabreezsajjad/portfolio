@@ -1,0 +1,205 @@
+/* -------- HERO (full-bleed, no side padding) -------- */
+.hero {
+  position: relative;
+  background: #cff3fb; /* light blue as per screenshot */
+  isolation: isolate;  /* keeps z-index stacking clean */
+}
+
+/* Wrap fills viewport height minus header, but no horizontal padding */
+.hero__wrap {
+    min-height: clamp(750px, 72vh, 820px);
+  display: grid;
+  grid-template-columns: 1fr; /* image is absolute; copy is the column */:root{
+  --text:#262626;
+  --bg:#ffffff;
+  --container: min(1200px, 92vw); /* same width as header */
+}
+
+/* HERO */
+.hero{
+  background:#cff3fb; /* full-bleed bg */
+  position:relative;
+}
+
+/* CONTAINER that clips overflow to match header/container width */
+.hero__wrap{
+  max-width: var(--container);
+  margin-inline: auto;
+  min-height: clamp(520px, 72vh, 820px);
+  display: grid;
+  align-items: center; /* vertical center text */
+  position: relative;
+  overflow: hidden;    /* prevent image spilling outside the container */
+}
+
+/* left text block */
+.hero__copy{
+  z-index:1;
+  width:min(640px, 96%); /* no side padding; just width cap */
+}
+
+.hero__title{
+  font-family:"Abril Fatface", serif;
+font-size: clamp(76px, 20vw, 82px);
+  line-height:1.05;
+  margin:0 0 10px;
+  color:var(--text);
+}
+.hero__lead{
+  font-family:"DM Sans", system-ui, sans-serif;
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height:1.65;
+  margin:0;
+}
+
+/* CTA */
+.btn-ghost{
+  display:inline-block;
+  margin-top:16px;
+  padding:12px 18px;
+  font-family:"DM Sans", system-ui, sans-serif;
+  font-size:14px; font-weight:500;
+  color:var(--text);
+  text-decoration:none;
+  border:1px solid var(--text);
+  border-radius:999px;
+  background:rgba(255,255,255,.35);
+}
+.btn-ghost:hover{ background:rgba(255,255,255,.55); }
+
+/* IMAGE — now anchored to the right *inside* the container */
+.hero__img{
+  position:absolute;
+  top:-30px; right:0;        /* aligns to the container’s right edge */
+  width:min(900px, 45%); /* scales with container, won’t hang outside */
+  height:auto;
+  pointer-events:none;
+}
+
+/* mobile tweaks */
+@media (max-width: 900px){
+  .hero__wrap{ min-height: 560px; }
+  .hero__img{ width: 92%; right: 0; } /* keep it inside and readable */
+}
+
+  align-items: center;        /* vertical center for the left copy */
+}
+
+/* Left copy block — inset a bit from the left edge like the figma */
+.hero__copy {
+  z-index: 1;
+  width: min(560px, 92vw);
+  margin-left: clamp(20px, 6vw, 80px); /* left gutter only */
+}
+
+/* Typography: enforce your fonts */
+.hero__title {
+  font-family: "Abril Fatface", serif;
+  font-size: clamp(42px, 6vw, 64px);
+  line-height: 1.06;
+  color: var(--text);
+  margin: 0 0 10px 0;
+  letter-spacing: 0;
+}
+.hero__lead {
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: clamp(16px, 1.55vw, 18px);
+  line-height: 1.6;
+  color: var(--text);
+  opacity: .95;
+  margin: 0;
+}
+
+/* CTA: compact pill */
+.btn-ghost {
+  display: inline-block;
+  margin-top: 14px;
+  padding: 9px 14px;
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text);
+  text-decoration: none;
+  border: 1px solid var(--text);
+  border-radius: 999px;
+  background: rgba(255,255,255,.35);
+}
+.btn-ghost:hover { background: rgba(255,255,255,.55); }
+
+/* Image flush to top-right */
+.hero__img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: clamp(520px, 54vw, 880px);
+  height: auto;
+  align-self: start;
+  justify-self: end;
+  pointer-events: none;
+  z-index: 0;
+  transform: translateY(-2%); /* slight push up to hug the top */
+}
+
+/* Mobile safety so image doesn't crowd text */
+@media (max-width: 720px) {
+  .hero__img { width: min(92vw, 620px); transform: translateY(0); }
+  .hero__copy { margin-left: clamp(16px, 5vw, 40px); }
+}
+
+
+/* =================== MOBILE FIX ONLY (≤900px) =================== */
+@media (max-width: 900px){
+  /* stack content; let height be natural */
+  .hero__wrap{
+    min-height: auto;
+    display: block;                          /* simpler stack than grid */
+    padding-bottom: clamp(24px, 7vh, 56px);
+  }
+
+  /* left copy spacing/width */
+  .hero__copy{
+    margin-left: clamp(16px, 6vw, 24px);     /* small left gutter */
+    padding-top: clamp(12px, 4vh, 28px);
+    width: 92vw;
+  }
+
+  /* type scale for phones */
+  .hero__title{
+    font-size: clamp(28px, 10vw, 40px);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .hero__lead{
+    font-size: clamp(14px, 4vw, 16px);
+    line-height: 1.7;
+    max-width: 60ch;
+  }
+
+  /* CTA keeps proportions */
+  .btn-ghost{
+    height: 40px;
+    padding: 0 16px;
+    font-size: 14px;
+    border-radius: 999px;
+  }
+
+  /* move image into normal flow under the text, centered */
+  .hero__img{
+    position: static !important;             /* stop absolute overlap */
+    width: 100% !important;
+    max-width: 640px;
+    margin: clamp(16px, 5vw, 28px) auto 0;   /* center with top gap */
+    transform: none !important;
+    top: auto !important;
+    right: auto !important;
+    z-index: 0 !important;
+    display: block;
+  }
+}
+
+/* tighter phones */
+@media (max-width: 480px){
+  .hero__title{ font-size: clamp(26px, 9.5vw, 34px); }
+  .hero__copy{  margin-left: clamp(12px, 5vw, 20px); }
+}
+
