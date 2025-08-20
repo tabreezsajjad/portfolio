@@ -32,20 +32,6 @@ export default function Footer() {
           </div>
         </div>
       </motion.div>
-
-      {/* Credits bar */}
-      <div className="footer__bar">
-        <div className="footer__bar-inner">
-          <span>
-            Illustrations by the incredibly talented{" "}
-            <a href="#" rel="noreferrer">Ankita Gogoi</a>
-          </span>
-          <span>
-            Website developed by the magician{" "}
-            <a href="#" rel="noreferrer">Preetom Gogoi</a>
-          </span>
-        </div>
-      </div>
     </footer>
   );
 }

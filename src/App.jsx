@@ -6,8 +6,11 @@ import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
 import Work from "./pages/Work.jsx";
 import About from "./pages/About.jsx";
-import Contact from "./pages/Contact.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
+import Press from "./pages/Press.jsx";
+import PressPost from "./pages/PressPost.jsx"
+import Blog from "./pages/Blog.jsx";
+import BlogPost from "./pages/BlogPost.jsx";
 
 // Slow, classy transitions
 const page = {
@@ -45,7 +48,10 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/work" element={<Work />} />
             <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/press" element={<Press />} />
+            <Route path="/press/:slug" element={<PressPost />} />
           </Routes>
         </motion.main>
       </AnimatePresence>

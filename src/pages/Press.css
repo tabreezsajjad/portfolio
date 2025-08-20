@@ -1,0 +1,55 @@
+:root{
+  --text:#262626;
+  --container: min(1200px, 92vw);
+}
+
+/* Section */
+.press{ background:#fff; }
+.press__wrap{
+  max-width: var(--container);
+  margin-inline:auto;
+  padding: clamp(32px, 8vw, 80px) clamp(16px, 4vw, 24px);
+}
+
+/* Header */
+.press__header{ text-align:center; margin-bottom: clamp(18px, 4vw, 28px); }
+.press__title{
+  font-family:"Abril Fatface", serif;
+  font-size: clamp(32px, 5vw, 54px);
+  line-height:1.06; margin:0 0 8px; color:var(--text);
+}
+.press__lead{
+  font-family:"DM Sans", system-ui, sans-serif;
+  opacity:.9; color:var(--text);
+  font-size: clamp(15px,1.6vw,18px); margin:0 auto; max-width:62ch;
+}
+
+/* Timeline list */
+.press__list{
+  position:relative; list-style:none; padding:0; margin: 0 auto; max-width: min(860px, 92vw);
+}
+.press__list::before{
+  content:""; position:absolute; left: 16px; top:0; bottom:0; width:2px; background:#e9efdb;
+}
+.press__row{
+  position:relative; padding: 14px 0 14px 46px; border-bottom: 1px solid #f0f3e8;
+}
+.press__row::before{
+  content:""; position:absolute; left:8px; top: 22px; width:16px; height:16px; border-radius:50%;
+  background:#cfe7ba; box-shadow: 0 0 0 3px #f3f8ec;
+}
+.press__date{
+  display:block; font-size: 13px; opacity:.7; font-family:"DM Sans", system-ui, sans-serif; margin-bottom:6px;
+}
+.press__link{
+  font-family:"DM Sans", system-ui, sans-serif; color:var(--text); text-decoration:none; line-height:1.4; font-size:16px;
+}
+.press__link:hover{ text-decoration: underline; text-underline-offset: 3px; }
+
+/* Article page uses Blog's article styles for consistency */
+.press__wrap--narrow{ max-width: min(860px, 92vw); }
+
+/* Skeletons */
+.skeleton{ height:160px; border-radius:12px; background: linear-gradient(90deg,#f1f4ea 0%,#e9efdb 50%,#f1f4ea 100%); animation: sh 1.2s linear infinite; }
+.skeleton-line{ height:54px; border-radius:8px; margin: 8px 0; background: linear-gradient(90deg,#f1f4ea 0%,#e9efdb 50%,#f1f4ea 100%); animation: sh 1.2s linear infinite; }
+@keyframes sh{ 0%{ background-position:-200px 0 } 100%{ background-position:200px 0 } }

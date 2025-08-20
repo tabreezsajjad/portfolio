@@ -65,7 +65,6 @@ function HeaderLinks({ onItemClick = () => {} }) {
       <li><NavLink to="/about" className={linkClass} onClick={onItemClick}>About</NavLink></li>
       <li><NavLink to="/blog" className={linkClass} onClick={onItemClick}>Blog</NavLink></li>
       <li><NavLink to="/press" className={linkClass} onClick={onItemClick}>Press Release</NavLink></li>
-      {/* <li><NavLink to="/contact" className={linkClass} onClick={onItemClick}>Contact</NavLink></li> */}
     </ul>
   );
 }
