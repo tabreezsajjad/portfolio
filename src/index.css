@@ -1,12 +1,28 @@
+@import "tailwindcss";
+
+
 :root {
   --text: #262626;
   --bg: #ffffff;
 }
+@layer base {
+    *,
+    *::before,
+    *::after {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+    /* For Firefox. */
+    * {
+        scrollbar-width: none;
+    }
+
+    /* For WebKit (Chrome & Safari). */
+    ::-webkit-scrollbar {
+        display: none;
+    }
 }
 
 html, body, #root {
