@@ -7,7 +7,9 @@
 
 /* Wrap fills viewport height minus header, but no horizontal padding */
 .hero__wrap {
-    min-height: clamp(750px, 72vh, 820px);
+  min-height: 90vh;
+  min-height: 90svh;  /* iOS “small viewport” */
+  min-height: 90dvh;  /* dynamic viewport (Chrome/iOS when bars hide) */
   display: grid;
   grid-template-columns: 1fr; /* image is absolute; copy is the column */:root{
   --text:#262626;
@@ -205,8 +207,10 @@ font-size: clamp(76px, 20vw, 82px);
 @media (max-width: 900px){
   /* stack content; let height be natural */
   .hero__wrap{
-    min-height: auto;
-    display: block;                          /* simpler stack than grid */
+ min-height: 90vh;
+    min-height: 90svh;
+    min-height: 90dvh;
+        display: block;                          /* simpler stack than grid */
     padding-bottom: clamp(24px, 7vh, 56px);
   }
 

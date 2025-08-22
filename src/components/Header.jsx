@@ -24,7 +24,7 @@ export default function Header() {
       <div className="header-inner">
         {/* Brand (pushed further left via CSS) */}
         <NavLink to="/" className="brand" onClick={() => setOpen(false)}>
-          tej
+  <img src="/images/tej.png" alt="Tej" className="brand-logo" />
         </NavLink>
 
         {/* Desktop nav */}

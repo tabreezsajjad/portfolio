@@ -1,94 +1,97 @@
-/* ============== FOOTER (centered, side-by-side) ============== */
-.site-footer{
-  background: #fff;
-  color: var(--text);
-}
-
-/* top area */
+/* ============= Top area background & spacing ============= */
 .footer__top{
-  padding: clamp(56px, 9vw, 112px) 0;
+  background: #C6F0F7;
+  padding-block: clamp(24px, 6vw, 48px);
 }
 
-/* Center the whole block; 1 column on mobile, 2 columns on wider screens */
+/* ============= Grid (center the two blocks) ============= */
 .footer__grid{
   max-width: var(--container, min(1200px, 92vw));
   margin-inline: auto;
-
   display: grid;
-  grid-template-columns: 1fr;          /* mobile: stack */
-  justify-items: center;               /* center each item horizontally */
-  align-items: center;                 /* vertical align */
-  justify-content: center;             /* center the whole grid */
-  gap: clamp(16px, 3vw, 32px);
-  text-align: center;                  /* center text by default */
+
+  /* keep overall centering */
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+
+  /* tighter vertical breathing on mobile/stack */
+  gap: clamp(8px, 2vw, 16px);
 }
 
-@media (min-width: 720px){
-  .footer__grid{
-    grid-template-columns: auto auto;  /* side-by-side */
-    column-gap: clamp(24px, 6vw, 64px);
-  }
+/* Two columns on desktop; stack on mobile.
+   ULTRA-TIGHT space between video and text. */
+.footer__grid--video{
+  grid-template-columns: minmax(160px, 280px) minmax(220px, 360px);
+  column-gap: clamp(0px, 0.4vw, 6px);   /* <<< tighter than before */
 }
 
-/* illustration */
-.footer__art img{
-  width: min(240px, 28vw);
-  height: auto;
-  display: block;
+/* ============= Video ============= */
+.footer__vidwrap{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* text block */
+.footer__video{
+  width: clamp(200px, 24vw, 360px);
+  height: clamp(200px, 24vw, 360px);
+  object-fit: cover;
+  border-radius: 0;
+  box-shadow: none;
+  background: #000;
+}
+
+.footer__video.ph{
+  background: linear-gradient(90deg, #e9f7ff, #d7eef6);
+}
+
+/* ============= Text block (left-align & flex-start) ============= */
+.footer__text{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;  /* left align */
+  text-align: left;         /* left align text */
+  gap: 2px;                 /* tighter internal spacing */
+}
+
 .footer__title{
-  font-family: "Abril Fatface", serif;
-  font-size: clamp(28px, 4.6vw, 44px);
-  line-height: 1.15;
-  margin: 0 0 14px 0;
+  font-family: "DM Sans", system-ui, sans-serif;
+  color: var(--text, #262626);
+  line-height: 1.2;
+  margin: 0 0 2px 0;        /* extra tight */
+  font-size: clamp(20px, 2.6vw, 28px);
 }
-.paw{ font-weight: 700; }
+
+.footer__title .highlight{
+  font-family: "Abril Fatface", serif;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+}
 
 .footer__label{
   font-family: "DM Sans", system-ui, sans-serif;
-  font-size: 15px;
-  opacity: .85;
-  margin: 0 0 6px 0;
+  font-size: 14px;
+  opacity: 0.85;
+  margin-top: 0;
 }
 
 .footer__email{
   font-family: "DM Sans", system-ui, sans-serif;
   font-size: 16px;
-  color: var(--text);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  color: var(--text, #262626);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  width: fit-content;
+  margin-inline: 0;
 }
-.footer__email:hover{ opacity: .9; }
+.footer__email:hover{ opacity: 0.9; }
 
-/* credits bar (still centered) */
-.footer__bar{
-  background: #1f2b1a; /* dark strip */
-  color: #fff;
-}
-.footer__bar-inner{
-  max-width: var(--container, min(1200px, 92vw));
-  margin-inline: auto;
-  padding: 12px clamp(16px, 4vw, 28px);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: 6px;
-  text-align: center;
-
-  font-family: "DM Sans", system-ui, sans-serif;
-  font-size: 13.5px;
-}
-.footer__bar-inner a{
-  color: #fff;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-.footer__bar-inner a:hover{ opacity: .9; }
-
-@media (min-width: 900px){
-  .footer__bar-inner{ flex-direction: row; gap: 40px; }
+/* ============= Responsive ============= */
+@media (max-width: 900px){
+  .footer__grid--video{
+    grid-template-columns: 1fr;           /* stack */
+    column-gap: 0;
+    row-gap: clamp(8px, 2.4vw, 14px);     /* tight but readable when stacked */
+  }
 }
