@@ -11,6 +11,7 @@ import Press from "./pages/Press.jsx";
 import PressPost from "./pages/PressPost.jsx"
 import Blog from "./pages/Blog.jsx";
 import BlogPost from "./pages/BlogPost.jsx";
+import ChatWidget from "./components/ChatWidget/ChatWidget.jsx";
 
 // Slow, classy transitions
 const page = {
@@ -57,6 +58,8 @@ export default function App() {
       </AnimatePresence>
 
       <Footer />
+      <ChatWidget />
+
     </div>
   );
 }
