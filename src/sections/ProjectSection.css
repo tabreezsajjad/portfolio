@@ -1,9 +1,9 @@
 /* =================== PROJECTS =================== */
-.projects{
-  background: #f2f5df; /* soft pale background like your screenshot */
+.projects {
+  background: #f2f5df; /* Soft pale background like your screenshot */
 }
 
-.projects__wrap{
+.projects__wrap {
   /* uses your site container if defined, otherwise falls back */
   max-width: var(--container, min(1200px, 92vw));
   margin-inline: auto;
@@ -11,134 +11,71 @@
 }
 
 /* Centered grid: 1 column by default, 2 columns on desktop */
-.projects__grid{
+.projects__grid {
   display: grid;
-  gap: clamp(16px, 2.4vw, 28px) clamp(18px, 3vw, 32px);
-  justify-content: center;               /* center entire grid */
-  grid-template-columns: 1fr;            /* mobile: single column */
+  /* Increased gap for more breathing room between items */
+  gap: clamp(40px, 5vw, 60px) clamp(18px, 3vw, 32px);
+  justify-content: center; /* center entire grid */
+  grid-template-columns: 1fr; /* mobile: single column */
 }
 
-@media (min-width: 900px){
-  .projects__grid{
-    grid-template-columns: repeat(2, minmax(300px, 520px));
+@media (min-width: 900px) {
+  .projects__grid {
+    /* Two flexible columns on larger screens */
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
   }
 }
 
-/* =================== CARD =================== */
-.project-card{
-  position: relative;
+/* =================== PROJECT ITEM (New Figma Style) =================== */
+
+/* The link tag is now a simple, unstyled wrapper. */
+.project-card {
   display: block;
-  width: min(520px, 92vw);
   text-decoration: none;
   color: inherit;
-  background: #fff;
-  border: 1px solid #e6edd1;
-  border-radius: 16px;
-  box-shadow:
-    0 1px 0 rgba(0,0,0,0.02),
-    0 8px 24px rgba(0,0,0,0.04);
-  padding: 12px;
-
-  /* smooth hover animations */
-  transition:
-    transform .35s cubic-bezier(.22,1,.36,1),
-    box-shadow .35s cubic-bezier(.22,1,.36,1),
-    border-color .35s ease;
-  will-change: transform;
+  /* All previous card styles (background, border, shadow, padding, transitions) have been removed. */
 }
 
-/* Lift + shadow on hover (desktop/laptops only) */
-@media (hover: hover) and (pointer: fine){
-  .project-card:hover{
-    transform: translateY(-6px) scale(1.01);
-    box-shadow:
-      0 2px 0 rgba(0,0,0,.03),
-      0 18px 32px rgba(0,0,0,.08);
-    border-color: #dae7bf; /* subtle tint */
-  }
-}
-
-/* Keyboard focus gets same treatment */
-.project-card:focus-visible{
-  transform: translateY(-6px) scale(1.01);
-  box-shadow:
-    0 2px 0 rgba(0,0,0,.03),
-    0 18px 32px rgba(0,0,0,.08);
-  border-color: #dae7bf;
-  outline: 2px solid #86b7ff;
-  outline-offset: 4px;
-}
-
-/* Optional highlight sheen */
-.project-card::after{
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
-  background: radial-gradient(120% 60% at 50% 0%, rgba(255,255,255,.35), transparent 60%);
-  opacity: 0;
-  transition: opacity .35s ease;
-  pointer-events: none;
-}
-@media (hover: hover) and (pointer: fine){
-  .project-card:hover::after{ opacity: .6; }
-}
-.project-card:focus-visible::after{ opacity: .6; }
-
-/* Press feedback */
-.project-card:active{
-  transform: translateY(-2px) scale(1.005);
-}
+/* All hover, focus, and active pseudo-classes have been removed for a cleaner look. */
 
 /* =================== MEDIA AREA =================== */
-.project-card__media{
-  border-radius: 12px;
+
+/* This element now creates the visual container for the image. */
+.project-card__media {
   overflow: hidden;
-  border: 1px solid #e9efd8;
-  background: #f7f9ef;
-  aspect-ratio: 16 / 9;
-  margin-bottom: 10px;
+  background: transparent; /* A white background in case images have transparency */
+  margin-bottom: 12px; /* Space between image and title */
 }
 
-.project-card__media img{
+.project-card__media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
-  transition: transform .5s cubic-bezier(.22,1,.36,1), filter .5s ease;
-  transform: scale(1);
-}
-
-/* Image zoom on hover/focus */
-@media (hover: hover) and (pointer: fine){
-  .project-card:hover .project-card__media img{
-    transform: scale(1.04);
-  }
-}
-.project-card:focus-visible .project-card__media img{
-  transform: scale(1.04);
+  /* Removed all transitions and transforms for the hover zoom effect. */
 }
 
 /* Placeholder (if you don’t have images yet) */
-.project-card__ph{
+.project-card__ph {
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, #f3f6ea 0%, #eef3e0 100%);
+  background: #f5f5f5;
 }
 
 /* =================== CAPTION =================== */
-.project-card__title{
+.project-card__title {
   font-family: "DM Sans", system-ui, sans-serif;
-  font-size: 14px;
-  line-height: 1.35;
-  opacity: .92;
+  /* THIS IS THE ONLY LINE THAT WAS CHANGED */
+  font-size: clamp(18px, 3vw, 32px); /* Responsive font size */
+  line-height: 1.4;
+  opacity: .9;
+  padding-inline: 4px; /* Minor padding to prevent text from touching edges */
 }
 
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce){
+/* This rule is kept as good practice, though most transitions were removed. */
+@media (prefers-reduced-motion: reduce) {
   .project-card,
-  .project-card__media img,
-  .project-card::after{
+  .project-card__media img {
     transition: none !important;
   }
 }

@@ -47,7 +47,6 @@ export default function ProjectsSection() {
               variants={card}
             >
               <div className="project-card__media">
-                {/* swap to <img src={p.img} alt={p.title}/> when images are ready */}
                 {p.img ? <img src={p.img} alt={p.title} /> : <div className="project-card__ph" />}
               </div>
               <div className="project-card__title">{p.title}</div>
