@@ -1,50 +1,70 @@
-/* =================== PROJECTS =================== */
+
+/* Adds a class to the card during the loading state */
+.project-card.is-loading .project-card__ph {
+  background-color: #e0e0e0;
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Placeholder for the title text */
+.project-card.is-loading .project-card__title-ph {
+  background-color: #e0e0e0; /* Match the color of the image placeholder */
+  height: 1.2em;             /* Approximate height of a line of text */
+  width: 70%;                /* Don't make it full-width for a more natural look */
+  border-radius: 4px;
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* A simple pulsing animation for the loading state */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+/* =================== PROJECTS (Existing) =================== */
 .projects {
-  background: #f2f5df; /* Soft pale background like your screenshot */
+  background: #f2f5df; /* Soft pale background */
 }
 
 .projects__wrap {
-  /* uses your site container if defined, otherwise falls back */
   max-width: var(--container, min(1200px, 92vw));
   margin-inline: auto;
   padding-block: clamp(32px, 8vw, 80px);
 }
 
-/* Centered grid: 1 column by default, 2 columns on desktop */
 .projects__grid {
   display: grid;
-  /* Increased gap for more breathing room between items */
   gap: clamp(40px, 5vw, 60px) clamp(18px, 3vw, 32px);
-  justify-content: center; /* center entire grid */
-  grid-template-columns: 1fr; /* mobile: single column */
+  justify-content: center;
+  grid-template-columns: 1fr;
 }
-
 @media (min-width: 900px) {
   .projects__grid {
-    /* Two flexible columns on larger screens */
     grid-template-columns: repeat(2, minmax(300px, 1fr));
   }
 }
 
-/* =================== PROJECT ITEM (New Figma Style) =================== */
-
-/* The link tag is now a simple, unstyled wrapper. */
+/* =================== ITEM (Existing) =================== */
 .project-card {
   display: block;
   text-decoration: none;
   color: inherit;
-  /* All previous card styles (background, border, shadow, padding, transitions) have been removed. */
+}
+.project-card:focus-visible{
+  outline: 2px solid #86b7ff;
+  outline-offset: 4px;
+  border-radius: 8px;
 }
 
-/* All hover, focus, and active pseudo-classes have been removed for a cleaner look. */
-
-/* =================== MEDIA AREA =================== */
-
-/* This element now creates the visual container for the image. */
+/* =================== MEDIA (Existing) =================== */
 .project-card__media {
+  position: relative;
   overflow: hidden;
-  background: transparent; /* A white background in case images have transparency */
-  margin-bottom: 12px; /* Space between image and title */
+  background: transparent;
+  margin-bottom: 12px;
 }
 
 .project-card__media img {
@@ -52,30 +72,46 @@
   height: 100%;
   object-fit: contain;
   display: block;
-  /* Removed all transitions and transforms for the hover zoom effect. */
 }
 
-/* Placeholder (if you don’t have images yet) */
+/* Placeholder skeleton (Existing, but will be enhanced by the new rules) */
 .project-card__ph {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background: #f5f5f5;
+  background-color: #f0f0f0;
 }
 
-/* =================== CAPTION =================== */
+/* =================== HOVER OVERLAY (Existing) =================== */
+.project-card__hover{
+  --hover-gap: 5px;
+  border-radius:16px;
+  position: absolute;
+  inset: var(--hover-gap);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(8px, 2vw, 24px);
+  text-align: center;
+  background: rgba(255,255,255,.55);
+  backdrop-filter: blur(6px);
+  font-family: "DM Sans", system-ui, sans-serif;
+  font-size: clamp(16px, 3vw, 48px);
+  line-height: 1.25;
+  color: #222;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+@media (hover: hover) and (pointer: fine){
+  .project-card:hover .project-card__hover{ opacity: 1; }
+}
+
+/* =================== CAPTION (Existing) =================== */
 .project-card__title {
   font-family: "DM Sans", system-ui, sans-serif;
-  /* THIS IS THE ONLY LINE THAT WAS CHANGED */
-  font-size: clamp(18px, 3vw, 32px); /* Responsive font size */
+  font-size: clamp(18px, 3vw, 32px);
   line-height: 1.4;
   opacity: .9;
-  padding-inline: 4px; /* Minor padding to prevent text from touching edges */
-}
-
-/* This rule is kept as good practice, though most transitions were removed. */
-@media (prefers-reduced-motion: reduce) {
-  .project-card,
-  .project-card__media img {
-    transition: none !important;
-  }
+  padding-inline: 4px;
 }

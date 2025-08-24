@@ -1,6 +1,10 @@
 @import "tailwindcss";
 
-
+/* 
+  Import the base block library styles from WordPress.
+  This provides the CSS for columns, alignments, galleries, etc.
+*/
+@import "@wordpress/block-library/build-style/style.css";
 :root {
   --text: #262626;
   --bg: #ffffff;

@@ -12,6 +12,7 @@ import PressPost from "./pages/PressPost.jsx"
 import Blog from "./pages/Blog.jsx";
 import BlogPost from "./pages/BlogPost.jsx";
 import ChatWidget from "./components/ChatWidget/ChatWidget.jsx";
+import ProjectDetails from "./pages/ProjectDetails.jsx";
 
 // Slow, classy transitions
 const page = {
@@ -48,6 +49,7 @@ export default function App() {
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<Home />} />
             <Route path="/work" element={<Work />} />
+            <Route path="/work/:slug" element={<ProjectDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:slug" element={<BlogPost />} />

@@ -39,29 +39,62 @@ export default function ChatWidget() {
     bodyRef.current.scrollTop = bodyRef.current.scrollHeight;
   }, [messages, typing, open]);
 
-  function handleSubmit(e) {
+
+  // --- THIS IS THE UPDATED LOGIC ---
+  async function handleSubmit(e) {
     e.preventDefault();
     const text = input.trim();
     if (!text) return;
 
+    // Add user's message to the UI right away
     const userMsg = { id: Date.now(), role: "user", text };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
-
-    // Fake bot reply
     setTyping(true);
-    setTimeout(() => {
-      setTyping(false);
+
+    // Prepare message history for the API. We strip the `id` field as the API doesn't need it.
+    const apiMessages = [...messages, userMsg].map((msg) => ({
+      role: msg.role,
+      content: msg.text,
+    }));
+
+    try {
+      // Call our secure serverless endpoint
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: apiMessages }),
+      });
+
+      if (!response.ok) {
+        // If the server returns an error, display it in the chat
+        const errorData = await response.json();
+        throw new Error(errorData.error || "An unknown error occurred.");
+      }
+
+      const data = await response.json();
+      
+      // Add the AI's response to the UI
+      if (data.reply?.content) {
+        setMessages((prev) => [
+          ...prev,
+          { id: Date.now() + 1, role: "bot", text: data.reply.content },
+        ]);
+      }
+
+    } catch (error) {
+      console.error("Chat fetch error:", error);
+      // Display a user-friendly error message in the chat
       setMessages((prev) => [
         ...prev,
-        {
-          id: Date.now() + 1,
-          role: "bot",
-          text: "Got it! Imagine this wired to a real backend. Want to check the Work page or Press releases?",
-        },
+        { id: Date.now() + 1, role: "bot", text: error.message },
       ]);
-    }, 900);
+    } finally {
+      setTyping(false);
+    }
   }
+
+  // --- THE REST OF THE COMPONENT REMAINS THE SAME ---
 
   // Simple stagger animation for messages
   const msgVariants = {
@@ -160,6 +193,7 @@ export default function ChatWidget() {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Type a message…"
                 aria-label="Type your message"
+                autoFocus
               />
               <button className="chat-send" type="submit">
                 Send
