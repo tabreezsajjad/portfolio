@@ -40,36 +40,35 @@ export default function ChatWidget() {
   }, [messages, typing, open]);
 
 
-  // --- THIS IS THE UPDATED LOGIC ---
+  // --- UPDATED LOGIC TO CALL NODE.JS SERVER ---
   async function handleSubmit(e) {
     e.preventDefault();
     const text = input.trim();
     if (!text) return;
 
-    // Add user's message to the UI right away
+    // Add user's message to the UI immediately
     const userMsg = { id: Date.now(), role: "user", text };
     setMessages((prev) => [...prev, userMsg]);
     setInput("");
     setTyping(true);
 
-    // Prepare message history for the API. We strip the `id` field as the API doesn't need it.
+    // Prepare message history for the API, stripping UI-specific fields
     const apiMessages = [...messages, userMsg].map((msg) => ({
       role: msg.role,
       content: msg.text,
     }));
 
     try {
-      // Call our secure serverless endpoint
-      const response = await fetch('/api/chat', {
+      // Point the fetch request to your local Node.js server
+      const response = await fetch('https://portfolio-chat-server-isdb.onrender.com/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: apiMessages }),
       });
 
       if (!response.ok) {
-        // If the server returns an error, display it in the chat
         const errorData = await response.json();
-        throw new Error(errorData.error || "An unknown error occurred.");
+        throw new Error(errorData.error || "An API error occurred.");
       }
 
       const data = await response.json();
