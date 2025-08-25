@@ -47,7 +47,7 @@ const SectionOne = () => {
             </div>
 
             {/* Right Column (Images): No changes to the outer div */}
-            <div className="bg-[#43b4fe]">
+            <div className="bg-white">
                 
                 {/* The first image container is wrapped in the Parallax component */}
                 <Parallax speed={0.3}>

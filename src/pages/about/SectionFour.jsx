@@ -37,7 +37,7 @@ const SectionFour = () => {
       </div>
 
       {/* Right Column (Images) */}
-      <div className="bg-white p-4 flex flex-col items-center gap-4 sm:p-8 sm:gap-8">
+      <div className="bg-white flex flex-col items-center">
         {/* Main Image with subtle parallax */}
         <FadeInUp>
           <Parallax speed={0.22}>
@@ -50,17 +50,13 @@ const SectionFour = () => {
         </FadeInUp>
 
         {/* 2x2 Image Grid with stagger + tiny parallax per tile */}
-        <div className="grid grid-cols-2 gap-4 w-full max-w-xl">
+        <div className="grid grid-cols-2 gap-0 w-full">
           {content.images.grid.map((src, index) => (
-            <FadeInUp key={index}>
-              <Parallax speed={0.14 + index * 0.04}>
                 <img
                   src={src}
                   alt={`A photo from one of the places lived, image ${index + 1}`}
                   className="w-full h-auto object-cover"
                 />
-              </Parallax>
-            </FadeInUp>
           ))}
         </div>
       </div>

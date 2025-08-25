@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import "./Header.css";
 
 export default function Header() {
@@ -14,9 +14,18 @@ export default function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Make background slightly transparent as you scroll
+  const { scrollY } = useScroll();
+  const bg = useTransform(
+    scrollY,
+    [0, 120],
+    ["rgba(231,247,251,1)", "rgba(231,247,251,0.82)"] // #e7f7fb at ~82% opacity
+  );
+
   return (
     <motion.header
       className="site-header"
+      style={{ backgroundColor: bg }}
       initial={{ opacity: 0, y: -12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1.0, ease: [0.22, 1, 0.36, 1] }}
@@ -24,7 +33,7 @@ export default function Header() {
       <div className="header-inner">
         {/* Brand (pushed further left via CSS) */}
         <NavLink to="/" className="brand" onClick={() => setOpen(false)}>
-  <img src="/images/tej.png" alt="Tej" className="brand-logo" />
+          <img src="/images/tej.png" alt="Tej" className="brand-logo" />
         </NavLink>
 
         {/* Desktop nav */}
@@ -60,11 +69,31 @@ function HeaderLinks({ onItemClick = () => {} }) {
   const linkClass = ({ isActive }) => "nav-link" + (isActive ? " is-active" : "");
   return (
     <ul className="nav-list">
-      <li><NavLink to="/" end className={linkClass} onClick={onItemClick}>Home</NavLink></li>
-      <li><NavLink to="/work" className={linkClass} onClick={onItemClick}>Work</NavLink></li>
-      <li><NavLink to="/about" className={linkClass} onClick={onItemClick}>About</NavLink></li>
-      <li><NavLink to="/blog" className={linkClass} onClick={onItemClick}>Blog</NavLink></li>
-      <li><NavLink to="/press" className={linkClass} onClick={onItemClick}>Press Release</NavLink></li>
+      <li>
+        <NavLink to="/" end className={linkClass} onClick={onItemClick}>
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/work" className={linkClass} onClick={onItemClick}>
+          Work
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/about" className={linkClass} onClick={onItemClick}>
+          About
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/blog" className={linkClass} onClick={onItemClick}>
+          Blog
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to="/press" className={linkClass} onClick={onItemClick}>
+          Press Release
+        </NavLink>
+      </li>
     </ul>
   );
 }

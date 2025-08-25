@@ -57,77 +57,61 @@ const SectionThree = () => {
       </div>
 
       {/* Right Column (Image Collage) */}
-      <div className="bg-white p-4 sm:p-8">
+      <div className="bg-[#FFF9EC]">
         {/* Top collage */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
           {/* Sticky column (md+) */}
-          <div className="hidden md:flex md:flex-col md:gap-4 md:sticky md:top-8 self-start">
+          <div className="hidden md:flex md:flex-col md:gap-0 md:sticky md:top-0 self-start">
             {content.images.stickyLeft.map((image, i) => (
-              <FadeInUp key={i}>
-                {/* Soft, subtle parallax; slightly different speeds for depth */}
-                <Parallax speed={i === 0 ? 0.18 : 0.24}>
                   <img
                     src={image.src}
                     alt={image.alt}
                     className="w-full h-auto object-cover"
                   />
-                </Parallax>
-              </FadeInUp>
             ))}
           </div>
 
           {/* Scrolling columns */}
-          <div className="grid grid-cols-2 gap-4 col-span-1 md:col-span-2">
-            <div className="flex flex-col gap-4">
+          <div className="grid grid-cols-2 gap-0 col-span-1 md:col-span-2">
+            <div className="flex flex-col gap-0">
               {content.images.rightColumnLeft.map((image, i) => (
-                <FadeInUp key={i}>
-                  <Parallax speed={0.12 + i * 0.03}>
                     <img
                       src={image.src}
                       alt={image.alt}
                       className="w-full h-auto object-contain"
                     />
-                  </Parallax>
-                </FadeInUp>
               ))}
             </div>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-0">
               {content.images.rightColumnRight.map((image, i) => (
-                <FadeInUp key={i}>
-                  <Parallax speed={0.12 + i * 0.03}>
                     <img
                       src={image.src}
                       alt={image.alt}
                       className="w-full h-auto object-contain"
                     />
-                  </Parallax>
-                </FadeInUp>
               ))}
             </div>
           </div>
         </div>
 
         {/* Additional bottom section */}
-        <div className="mt-8 md:mt-16">
-          <FadeInUp>
-            <Parallax speed={0.2}>
-              <img
+        <div className="mt-8 md:mt-32 bg-[#FFF9EC]">
+          <div className="pl-6 pr-6 mb-8 md:mb-32">
+               <img
                 src={content.images.additionalSection.topImage.src}
                 alt={content.images.additionalSection.topImage.alt}
                 className="w-full h-auto object-cover mb-4"
               />
-            </Parallax>
-          </FadeInUp>
+          </div>
+           
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-2 gap-0 bg-white">
             {content.images.additionalSection.bottomGrid.map((image, i) => (
-              <FadeInUp key={i}>
                 <img
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-auto object-cover"
                 />
-              </FadeInUp>
             ))}
           </div>
         </div>
