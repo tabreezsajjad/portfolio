@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import "./WhatIDo.css";
+import "./WhatIdo.css";
 
 export default function WhatIDo() {
   return (
