@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { getPostBySlug } from "../api/projectWp"; // Ensure this path is correct
+import { getPostBySlug } from "../api/projectWp";
 import "./ProjectDetails.css";
 
-// Animation variants for Framer Motion
 const fade = {
   hidden: { opacity: 0, y: 16, filter: "blur(4px)" },
   show: {
@@ -16,63 +15,103 @@ const fade = {
 };
 
 export default function ProjectDetails() {
-  const { slug } = useParams(); // Get the slug from the URL (e.g., /work/my-project-slug)
+  const { slug } = useParams();
   const nav = useNavigate();
   const [post, setPost] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Ref to the rendered Gutenberg content so we can decorate it
+  const contentRef = useRef(null);
+
   useEffect(() => {
-    // This flag prevents state updates if the component unmounts during a fetch
     let alive = true;
-
-    const fetchPost = async () => {
-      setLoading(true);
-      
-      // For debugging: Check what slug is being used for the API call
-      console.log("Fetching post with slug:", slug);
-
+    (async () => {
       try {
+        setLoading(true);
         const data = await getPostBySlug(slug);
-        
-        // For debugging: See what the API returned
-        console.log("Data received from API:", data);
-
-        if (alive) {
-          setPost(data); // `data` will be the post object or `null` if not found
-          // Set the document title if the post was found and has a title
-          if (data?.hero?.title) {
-            document.title = `${data.hero.title} – Work`;
-          }
-        }
-      } catch (error) {
-        console.error("Failed to fetch project details:", error);
-        // Optionally set an error state here to show a message to the user
+        if (!alive) return;
+        setPost(data);
+        if (data?.hero?.title) document.title = `${data.hero.title} – Work`;
+      } catch (e) {
+        console.error("Project load error:", e);
       } finally {
-        if (alive) {
-          setLoading(false);
+        if (alive) setLoading(false);
+      }
+    })();
+    window.scrollTo(0, 0);
+    return () => { alive = false; };
+  }, [slug]);
+
+  // Decorate the DOM: auto plates + icon normalization
+  useEffect(() => {
+    const root = contentRef.current;
+    if (!root) return;
+
+    // remove previous pass (strict mode / re-renders)
+    root.querySelectorAll(".proj__plate").forEach((p) => {
+      const frag = document.createDocumentFragment();
+      while (p.firstChild) frag.appendChild(p.firstChild);
+      p.replaceWith(frag);
+    });
+    root.querySelectorAll(".wp-block-group.is-plate").forEach((el) => {
+      el.classList.remove("is-plate", "plate-1", "plate-2", "plate-3", "plate-4");
+    });
+
+    // 1) If there are top-level Gutenberg Groups, color them
+    const topGroups = Array.from(root.children).filter((el) =>
+      el.classList?.contains("wp-block-group")
+    );
+    let plateIdx = 0;
+    if (topGroups.length) {
+      topGroups.forEach((el) => {
+        el.classList.add("is-plate", `plate-${(plateIdx % 4) + 1}`);
+        plateIdx++;
+      });
+    } else {
+      // 2) No groups → build “plates” by splitting at each H2
+      const kids = Array.from(root.children);
+      const makePlate = (i) => {
+        const plate = document.createElement("div");
+        plate.className = `proj__plate plate-${(i % 4) + 1}`;
+        return plate;
+      };
+
+      let current = null;
+      kids.forEach((el) => {
+        const isSplit = el.matches("h2, .wp-block-heading h2");
+        if (!current || isSplit) {
+          current = makePlate(plateIdx++);
+          el.before(current);
+        }
+        current.appendChild(el);
+      });
+    }
+
+    // 3) Icon normalization (png/svg). You can hint with alt="icon: name".
+    const normalizeIcon = (img) => {
+      const alt = (img.getAttribute("alt") || "").toLowerCase();
+      const rect = img.getBoundingClientRect();
+      const small = rect.width && rect.height && rect.width <= 160 && rect.height <= 160;
+
+      if (alt.startsWith("icon:") || small) {
+        img.classList.add("proj-icon");
+        const fig = img.closest("figure.wp-block-image");
+        if (fig) {
+          fig.classList.add("is-icon");
+          const prev = fig.previousElementSibling;
+          if (prev && prev.tagName === "P") fig.classList.add("is-note"); // “icon below text” look
         }
       }
     };
 
-    fetchPost();
-    window.scrollTo(0, 0); // Scroll to top on component mount
+    root.querySelectorAll("figure.wp-block-image img").forEach((img) => {
+      if (img.complete) normalizeIcon(img);
+      else img.addEventListener("load", () => normalizeIcon(img), { once: true });
+    });
+  }, [post?.content]);
 
-    // Cleanup function to run when the component unmounts
-    return () => {
-      alive = false;
-    };
-  }, [slug]); // Re-run the effect if the slug changes
+  if (loading) return <div className="proj proj--loading"><p>Loading project...</p></div>;
 
-  // 1. Loading State
-  if (loading) {
-    return (
-      <div className="proj proj--loading">
-        <p>Loading project...</p>
-      </div>
-    );
-  }
-
-  // 2. Not Found State (API returned null)
   if (!post) {
     return (
       <div className="proj proj--empty">
@@ -82,10 +121,16 @@ export default function ProjectDetails() {
     );
   }
 
-  // 3. Success State (Post data is available)
+  const smallDetails = post.hero.smallDetails || post.hero.small || "";
+
   return (
     <main className="proj" aria-labelledby="proj-title">
-      {/* Render structured data from ACF */}
+      {post.hero.image && (
+        <motion.figure className="proj__hero" variants={fade} initial="hidden" animate="show">
+          <img src={post.hero.image} alt={`${post.hero.title} hero`} />
+        </motion.figure>
+      )}
+
       <div className="proj__head">
         <motion.h1 id="proj-title" className="proj__title" variants={fade} initial="hidden" animate="show">
           {post.hero.title}
@@ -95,23 +140,17 @@ export default function ProjectDetails() {
             {post.hero.subtitle}
           </motion.p>
         )}
-        {post.hero.smallDetails && (
+        {!!smallDetails && (
           <motion.div className="proj__small-details" variants={fade} initial="hidden" animate="show">
-            {post.hero.smallDetails}
+            {smallDetails}
           </motion.div>
         )}
       </div>
 
-      {post.hero.image && (
-        <motion.figure className="proj__hero" variants={fade} initial="hidden" animate="show">
-          <img src={post.hero.image} alt={`${post.hero.title} hero`} />
-        </motion.figure>
-      )}
-
-      {/* Render free-form content from the Gutenberg editor */}
       {post.content && (
         <motion.section
-          className="proj__content about-body" // Reusing your existing CSS classes
+          ref={contentRef}
+          className="proj__content"
           variants={fade}
           initial="hidden"
           whileInView="show"
@@ -120,7 +159,6 @@ export default function ProjectDetails() {
         />
       )}
 
-      {/* Footer navigation */}
       <div className="proj__footer">
         <button className="proj__back" onClick={() => nav(-1)}>← Back</button>
         <Link className="proj__back" to="/work">All projects</Link>

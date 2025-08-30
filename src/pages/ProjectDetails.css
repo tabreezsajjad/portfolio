@@ -1,33 +1,417 @@
-.proj{ max-width: var(--container, min(1200px, 92vw)); margin: 0 auto; }
-.proj__head{ padding: clamp(24px,5vw,48px) 0; }
-.proj__title{ font-family:"Abril Fatface",serif; font-size: clamp(28px,4vw,42px); margin: 0 0 .4em 0; }
-.proj__lead{ font-family:"DM Sans",system-ui,sans-serif; font-size: clamp(16px,1.4vw,18px); opacity:.9; }
-.proj__hero{ margin: 0 0 clamp(18px,4vw,32px) 0; }
-.proj__hero img{ width:100%; height:auto; display:block; }
+/* ================================
+   Project Detail — Book Illustration Style
+   (No editor actions needed)
+   ================================ */
 
-.proj__content{ display: flex; flex-direction: column; gap: clamp(16px,3vw,32px); }
-.proj__row{ padding: clamp(18px,4vw,32px); border-radius: 0; }
-.proj__row--split{ display:grid; grid-template-columns: 1fr 1fr; gap: clamp(12px,2.4vw,24px); }
-.proj__row--three{ display:grid; grid-template-columns: 1fr 1fr; gap: clamp(12px,2.4vw,24px); }
-.proj__row--full{ padding: 0; }
-.proj__row--logos .proj__mediaGrid{ display:flex; gap: clamp(12px,2vw,20px); flex-wrap: wrap; align-items:center; }
 
-@media (max-width: 900px){
-  .proj__row--split, .proj__row--three{ grid-template-columns: 1fr; }
+.proj{
+  --content-width: min(920px, 92vw);
+  --measure: 68ch;
+
+
+  /* print palette */
+  --paper: #fffdf7;
+  --ink: #262626;
+  --rule: #e9e2cf;
+  --muted: #666;
+
+
+  /* gentle plate cycle */
+  --plate-1: #fbf8ee; /* warm cream */
+  --plate-2: #ecf6fb; /* pale aqua */
+  --plate-3: #f9eef2; /* blush */
+  --plate-4: #eef7ed; /* mint */
+
+
+  --accent: var(--color-accent, #8bbf4f);
+  --t: 280ms;
+
+
+  background: var(--paper);
+  color: var(--ink);
+  padding-inline: 1.25rem;
+  padding-top: clamp(32px, 7vh, 72px);
 }
 
-.proj__text{ max-width: 680px; }
-.proj__h{ font-size: clamp(22px,2.4vw,28px); margin: 0 0 .4em 0; font-family:"Abril Fatface",serif; }
-.proj__hh{ font-size: clamp(18px,2vw,22px); margin: .25em 0 .35em; }
-.proj__sub{ opacity:.95; }
-.proj__list{ margin: .6em 0 0 1.1em; }
-.proj__icons{ display:flex; gap: 16px; margin-top: 10px; }
-.proj__icon img{ width:44px; height:44px; object-fit:contain; display:block; }
 
-.proj__mediaGrid{ display:grid; grid-template-columns: 1fr 1fr; gap: clamp(8px,2vw,14px); }
-.proj__mediaGrid.single{ grid-template-columns: 1fr; }
-.proj__media img{ width:100%; height:auto; display:block; }
-.proj__cap{ font-size: 12px; opacity:.8; margin-top:.25rem; }
+/* ================= HEAD ================= */
 
-.proj__footer{ display:flex; gap:18px; padding: clamp(18px,4vw,32px) 0; }
-.proj__back{ color: var(--text,#262626); text-decoration:none; border:1px solid currentColor; border-radius:999px; padding:8px 12px; background:#fff; }
+
+.proj__head{
+  text-align: center;
+  padding: clamp(48px, 10vw, 88px) 0 clamp(28px, 6vw, 56px);
+  max-width: var(--content-width);
+  margin-inline: auto;
+}
+.proj__title{
+  font-size: clamp(34px, 5vw, 50px);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: .1px;
+  margin: 0 0 .55em 0;
+  position: relative;
+}
+.proj__title::after{
+  content:"";
+  display:block;
+  width: 96px;
+  height: 2px;
+  margin: .6em auto 0;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: .9;
+}
+.proj__lead{
+  font-size: clamp(17px, 1.6vw, 19px);
+  line-height: 1.8;
+  color: var(--color-text-light, #555);
+  margin: 0 auto;
+  max-width: min(var(--measure), 720px);
+}
+.proj__small-details{
+  font-size: 12px;
+  letter-spacing: .04em;
+  color: #8b8b8b;
+  text-transform: uppercase;
+  margin-top: .65rem;
+}
+
+
+/* ================= HERO ================= */
+
+
+.proj__hero{
+  max-width: var(--content-width);
+  margin: 0 auto clamp(36px, 7.5vw, 64px);
+}
+.proj__hero img{
+  display: block;
+  margin-inline: auto;
+  width: min(100%, 1040px);
+  max-height: clamp(340px, 52vh, 620px);
+  height: auto;
+  object-fit: contain;
+  border-radius: 0;
+}
+
+
+/* ================= CONTENT ================= */
+
+
+.proj__content{
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
+
+
+/* first paragraph: no drop cap */
+.proj__content > p:first-of-type::first-letter{
+  float: none; font-family: inherit; font-size: inherit; line-height: inherit; padding: 0; color: inherit;
+}
+
+
+/* Headings (default) */
+.proj__content h2{
+  font-size: clamp(22px, 3.2vw, 34px);
+  font-weight: 600;
+  line-height: 1.25;
+  margin: clamp(32px, 7vw, 56px) auto .8rem;
+  padding-left: .9rem;
+  border-left: 3px solid var(--accent);
+}
+.proj__content h3{
+  font-size: clamp(18px, 2.2vw, 24px);
+  font-weight: 600;
+  margin: clamp(22px, 5vw, 36px) auto .6rem;
+}
+
+
+/* ✅ Keep H2/H3 aligned to the same text column when they’re inside columns or groups */
+.proj__content .wp-block-columns :where(h2,h3){
+  border-left: 0;
+  padding-left: 0;
+  max-width: var(--measure);
+  margin-left: auto;
+  margin-right: auto;
+}
+.proj__content .wp-block-group__inner-container :where(h2,h3){
+  max-width: var(--measure);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+.proj__content p{
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--color-text-light, #555);
+  margin: 0 auto 1.1rem;
+  max-width: var(--measure);
+}
+
+
+.proj__content ul,
+.proj__content ol{
+  list-style: none;
+  padding-left: 0;
+  margin: .8rem auto 1.4rem;
+  max-width: var(--measure);
+}
+.proj__content li{
+  position: relative;
+  padding-left: 1.6rem;
+  margin-bottom: .6rem;
+  color: var(--color-text-light, #555);
+}
+.proj__content li::before{
+  content: "✓";
+  position: absolute; left: 0; top: .05rem;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+
+.proj__content .wp-block-columns{
+  gap: clamp(16px, 3.2vw, 40px);
+  align-items: center;
+  max-width: var(--content-width);
+  margin-inline: auto;
+}
+
+
+.proj__content hr,
+.proj__content .wp-block-separator{
+  max-width: var(--measure);
+  margin: clamp(20px, 4vw, 32px) auto;
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--rule), transparent);
+}
+
+
+.proj__content .wp-block-pullquote,
+.proj__content blockquote{
+  max-width: min(var(--measure), 56ch);
+  margin: clamp(24px, 6vw, 48px) auto;
+  color: var(--ink);
+  font-style: italic;
+  position: relative;
+}
+.proj__content .wp-block-pullquote blockquote,
+.proj__content blockquote p{ margin: 0; }
+.proj__content .wp-block-pullquote p,
+.proj__content blockquote p{ font-size: clamp(18px, 2.4vw, 24px); line-height: 1.6; }
+.proj__content .wp-block-pullquote::before,
+.proj__content blockquote::before{
+  content: "“";
+  position: absolute; left: -18px; top: -8px;
+  font-family: "Abril Fatface", serif;
+  font-size: 48px; color: var(--accent); opacity: .85;
+}
+.proj__content cite{
+  display: block; margin-top: .6rem; font-size: .9rem; color: var(--muted); font-style: normal;
+}
+
+
+/* Images & captions */
+
+
+.proj__content figure,
+.proj__content .wp-block-image{
+  margin: clamp(18px, 4vw, 36px) auto;
+  text-align: center;
+  max-width: var(--content-width);
+}
+.proj__content img{
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+  transition: transform var(--t) ease, box-shadow var(--t) ease;
+}
+.proj__content img:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(0,0,0,.08);
+}
+.proj__content figcaption,
+.proj__content .wp-element-caption{
+  margin-top: .6rem;
+  font-size: .92rem;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+}
+.proj__content .wp-block-columns .wp-block-image img{
+  box-shadow: none; transition: none; border-color: #eee7d3;
+}
+
+
+/* ================= AUTO PLATES ================= */
+
+
+/* Plates created by JS wrapper */
+.proj__plate{
+  margin-left: calc(-50vw + 50%);
+  width: 100vw;
+  box-sizing: border-box;
+  padding: clamp(44px, 9vw, 88px) 1rem;
+  border-block: 1px solid var(--rule);
+}
+.proj__plate > *{
+  max-width: var(--content-width);
+  margin-inline: auto;
+}
+
+
+/* Plates on native Gutenberg Groups (JS adds .is-plate + plate-N) */
+.proj__content > .wp-block-group.is-plate{
+  margin-left: calc(-50vw + 50%);
+  width: 100vw;
+  box-sizing: border-box;
+  padding: clamp(44px, 9vw, 88px) 1rem;
+  border-block: 1px solid var(--rule);
+}
+.proj__content > .wp-block-group.is-plate > .wp-block-group__inner-container > *{
+  max-width: var(--content-width);
+  margin-inline: auto;
+}
+
+
+/* Alternating colors */
+.proj__plate.plate-1,
+.proj__content > .wp-block-group.plate-1{ background: var(--plate-1); }
+.proj__plate.plate-2,
+.proj__content > .wp-block-group.plate-2{ background: var(--plate-2); }
+.proj__plate.plate-3,
+.proj__content > .wp-block-group.plate-3{ background: var(--plate-3); }
+.proj__plate.plate-4,
+.proj__content > .wp-block-group.plate-4{ background: var(--plate-4); }
+
+
+/* Animate plates too */
+.proj__plate{
+  opacity: 0;
+  animation: projFadeIn .8s ease-out forwards;
+  animation-delay: .18s;
+}
+
+
+/* ================= ICON SYSTEM ================= */
+
+
+.proj__content img.proj-icon{
+  width: clamp(40px, 5vw, 56px);
+  height: clamp(40px, 5vw, 56px);
+  object-fit: contain;
+  border: 0; box-shadow: none; background: transparent;
+}
+.proj__content figure.is-icon{
+  text-align: left;
+  margin: 1rem 0 .75rem;
+}
+.proj__content figure.is-icon.is-note{
+  padding: .5rem 0;
+  border-left: 3px solid var(--accent);
+  padding-left: .75rem;
+}
+.proj__content figure.is-icon.is-note img.proj-icon{
+  width: clamp(28px, 3.5vw, 40px);
+  opacity: .9; filter: grayscale(.06) contrast(1.05);
+}
+.proj__content figure.is-icon figcaption{
+  font-size: .85rem; color: var(--muted); margin-top: .35rem;
+}
+.proj__content .iconline{ display:flex; align-items:center; gap:12px; }
+.proj__content .iconline .proj-icon{ flex:0 0 auto; }
+.proj__content .iconline .iconline__text{ font-size:16px; line-height:1.55; color:var(--muted); }
+
+
+/* ================= FOOTER NAV (Sleek & Elegant) ================= */
+
+.proj__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    /* Reduced vertical space for a tighter feel */
+    padding: 2rem 0;
+    margin: 1rem auto 0;
+    max-width: var(--content-width);
+    /* Using the same rule color as other elements for consistency */
+}
+
+.proj__back {
+    font-size: 14px;
+    font-family: var(--font-primary, sans-serif); /* Use a sans-serif for button UI */
+    text-decoration: none;
+    color: var(--muted); /* Muted color for a refined look */
+    background-color: transparent;
+    /* A very light, thin border */
+    border: 1px solid var(--rule);
+    padding: 0.6rem 1.25rem;
+    border-radius: 999px; /* Pill shape */
+    cursor: pointer;
+    /* Smooth transitions for all properties */
+    transition: all 250ms ease;
+}
+
+.proj__back:hover {
+    /* On hover, invert the colors for a clear, elegant effect */
+    background-color: var(--ink);
+    border-color: var(--ink);
+    color: var(--paper); /* Use the page's paper color for text */
+    /* A very subtle lift to provide feedback */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+
+
+
+/* ================= ANIMATION ================= */
+
+
+.proj__content > *:not(.wp-block-group),
+.proj__head,
+.proj__hero{
+  opacity: 0;
+  filter: blur(5px);
+  transform: translateY(20px);
+  animation: projFadeIn .8s ease-out forwards;
+}
+.proj__hero{ animation-delay: .12s; }
+.proj__content{ animation-delay: .24s; }
+.proj__content > .wp-block-group{
+  opacity: 0;
+  animation: projFadeIn .8s ease-out forwards;
+  animation-delay: .18s;
+}
+@keyframes projFadeIn{
+  to{ opacity: 1; filter: blur(0); transform: translateY(0); }
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+
+@media (max-width: 900px){
+  .proj{ padding-inline: 1rem; }
+  .proj__footer{ padding-inline: 0; }
+  .proj__content .wp-block-columns{ gap: 1.25rem; }
+}
+@media (max-width: 560px){
+  .proj__title{ font-size: clamp(28px, 8.2vw, 34px); }
+  .proj__lead{ font-size: 16px; }
+  .proj__hero img{ max-height: clamp(260px, 48vh, 520px); }
+}
+
+/* ===================================================
+   Alignment Fix: Align headers with paragraphs
+   =================================================== */
+
+/* This targets h2 and h3 elements that are direct children of .proj__content */
+.proj__content > h2,
+.proj__content > h3 {
+    padding-left: 0;
+    border-left: none;
+}
