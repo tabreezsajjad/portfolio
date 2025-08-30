@@ -226,7 +226,6 @@
   max-width: 100%;
   height: auto;
   border-radius: 0;
-  box-shadow: 0 6px 18px rgba(0,0,0,.06);
   transition: transform var(--t) ease, box-shadow var(--t) ease;
 }
 .proj__content img:hover{
